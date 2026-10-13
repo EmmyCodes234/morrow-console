@@ -678,7 +678,7 @@ en:
       custom_domain_not_configured: 'Custom domain is not configured'
   installation:
     onboarding:
-      heading: 'Howdy, Welcome to Chatwoot 👋'
+      heading: 'Welcome to Morrow'
       name: 'Name'
       name_placeholder: 'Enter your full name. eg: Bruce Wayne'
       company: 'Company Name'

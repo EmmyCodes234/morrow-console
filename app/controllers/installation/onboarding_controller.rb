@@ -35,6 +35,8 @@ class Installation::OnboardingController < ApplicationController
       onboarding_params.dig(:user, :name),
       onboarding_params.dig(:user, :email)
     )
+  rescue StandardError => e
+    Rails.logger.error "Error in finish_onboarding: #{e.message}"
   end
 
   def ensure_installation_onboarding
