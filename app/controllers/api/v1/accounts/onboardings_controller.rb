@@ -25,21 +25,13 @@ class Api::V1::Accounts::OnboardingsController < Api::V1::Accounts::BaseControll
   private
 
   def complete_account_details
-    # Only act while the cursor still points here, so a stale replay after
-    # onboarding finished can't re-enter it.
     return unless current_step == STEP_ACCOUNT_DETAILS
 
-    @account.assign_attributes(account_params)
-    @account.custom_attributes.merge!(custom_attributes_params)
+    @account.assign_attributes(account_params) if account_params.present?
+    @account.custom_attributes.merge!(custom_attributes_params) if custom_attributes_params.present?
 
-    # inbox_setup is a cloud-only step (DEPLOYMENT_ENV config, not a hardcoded
-    # environment check); self-hosted finishes onboarding here.
-    if ChatwootApp.chatwoot_cloud?
-      move_to_step(STEP_INBOX_SETUP)
-      create_onboarding_inboxes
-    else
-      finish_onboarding
-    end
+    # In Morrow, channels are connected on-demand from Settings without blocking workspace entry.
+    finish_onboarding
   end
 
   def complete_inbox_setup

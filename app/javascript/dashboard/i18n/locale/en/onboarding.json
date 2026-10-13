@@ -1,9 +1,9 @@
 {
   "ONBOARDING_NEXT": {
-    "GREETING": "Hello {name}!",
-    "SUBTITLE": "Please review the following details",
-    "YOUR_DETAILS": "Your details",
-    "COMPANY_DETAILS": "Company details",
+    "GREETING": "Welcome, {name}",
+    "SUBTITLE": "Set up your resolution workspace",
+    "YOUR_DETAILS": "Your Profile",
+    "COMPANY_DETAILS": "Organization Details",
     "FIELDS": {
       "EMAIL": "Email",
       "YOUR_ROLE": "Your Role",
@@ -25,7 +25,8 @@
     },
     "EMAIL_VERIFIED": "Email verified",
     "SETTING_UP": "Setting up your account...",
-    "CONTINUE": "Continue",
+    "CONTINUE": "Enter Workspace",
+    "SKIP": "Skip for now",
     "SAVING": "Saving...",
     "VALIDATION_ERROR": "Please fill in all required fields",
     "SUCCESS": "Details saved successfully",
@@ -40,7 +41,7 @@
     "WHATSAPP_CONNECTED": "WhatsApp connected successfully",
     "FACEBOOK_CONNECTED": "Facebook connected successfully",
     "META_RESTRICTION": {
-      "MESSAGE": "Inbox setup for Facebook, Instagram, and WhatsApp is temporarily unavailable due to an API-level issue on Meta’s side, not a problem with Chatwoot. We’re working closely with Meta to resolve it as quickly as possible.",
+      "MESSAGE": "Inbox setup for Facebook, Instagram, and WhatsApp is temporarily unavailable due to an API-level issue on Meta’s side, not a problem with Morrow. We’re working closely with Meta to resolve it as quickly as possible.",
       "STATUS_LINK": "View status updates"
     },
     "CREATED_FOR_YOU": {

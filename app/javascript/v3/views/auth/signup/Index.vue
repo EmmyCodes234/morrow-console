@@ -20,7 +20,7 @@ const { replaceInstallationName } = useBranding();
 const isLoading = ref(false);
 const globalConfig = computed(() => store.getters['globalConfig/get']);
 const isAChatwootInstance = computed(
-  () => globalConfig.value.installationName === 'Chatwoot'
+  () => globalConfig.value.installationName === 'Chatwoot' || globalConfig.value.installationName === 'Morrow'
 );
 const isShopifySignup = computed(() => Boolean(props.shopifyPendingInstall));
 const loginRoute = computed(() => {

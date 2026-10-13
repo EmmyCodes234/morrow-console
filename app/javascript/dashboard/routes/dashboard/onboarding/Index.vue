@@ -51,10 +51,7 @@ const showErrorOnFields = ref(false);
 
 const validationRules = {
   userRole: {},
-  // Website is required: the onboarding web-widget inbox can't be created
-  // without a URL (Channel::WebWidget validates presence), so a blank value
-  // would leave the "Live Chat widget" status polling forever.
-  website: { required },
+  website: {},
   locale: {},
   timezone: {},
   companySize: {},
@@ -183,21 +180,27 @@ const handleSubmit = async () => {
     });
 
     useAlert(t('ONBOARDING_NEXT.SUCCESS'));
-    // Follow the cursor the backend advanced us to. A next step routes there; no
-    // next step means onboarding is complete, so refresh the user (so the router
-    // guard sees the cleared cursor) and head to the dashboard.
-    const nextStep = currentAccount.value?.custom_attributes?.onboarding_step;
-    if (STEP_ROUTES[nextStep]) {
-      router.push({
-        name: STEP_ROUTES[nextStep],
-        params: { accountId: accountId.value },
-      });
-    } else {
-      await store.dispatch('setUser');
-      router.push({ name: 'home', params: { accountId: accountId.value } });
-    }
+    await store.dispatch('setUser');
+    router.push({ name: 'home', params: { accountId: accountId.value } });
   } catch {
     useAlert(t('ONBOARDING_NEXT.ERROR'));
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+const handleSkip = async () => {
+  if (isSubmitting.value) return;
+  isSubmitting.value = true;
+  try {
+    await finishOnboarding({
+      onboarding_step: 'account_details',
+    });
+    await store.dispatch('setUser');
+    router.push({ name: 'home', params: { accountId: accountId.value } });
+  } catch {
+    await store.dispatch('setUser');
+    router.push({ name: 'home', params: { accountId: accountId.value } });
   } finally {
     isSubmitting.value = false;
   }
@@ -210,8 +213,10 @@ const handleSubmit = async () => {
       :greeting="t('ONBOARDING_NEXT.GREETING', { name: userName })"
       :subtitle="t('ONBOARDING_NEXT.SUBTITLE')"
       :continue-label="t('ONBOARDING_NEXT.CONTINUE')"
+      :skip-label="t('ONBOARDING_NEXT.SKIP')"
       :is-loading="isSubmitting"
-      :disabled="isEnriching"
+      :disabled="false"
+      @skip="handleSkip"
     >
       <OnboardingSection
         :title="t('ONBOARDING_NEXT.YOUR_DETAILS')"
