@@ -160,25 +160,31 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
   end
 
   def find_channel_by_url_param(params)
-    return unless params[:phone_number]
+    raw_number = params[:phone_number].to_s.strip
+    return if raw_number.blank?
 
-    Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    digits = raw_number.gsub(/[^0-9]/, '')
+    Channel::Whatsapp.find_by(phone_number: "+#{digits}") || Channel::Whatsapp.find_by(phone_number: digits)
   end
 
   def find_channel_from_whatsapp_business_payload(params)
-    # for the case where facebook cloud api support multiple numbers for a single app
-    # https://github.com/chatwoot/chatwoot/issues/4712#issuecomment-1173838350
-    # we will give priority to the phone_number in the payload
-    return get_channel_from_wb_payload(params) if params[:object] == 'whatsapp_business_account'
-
-    find_channel_by_url_param(params)
+    channel = get_channel_from_wb_payload(params) if params[:object] == 'whatsapp_business_account'
+    channel ||= find_channel_by_url_param(params)
+    channel ||= Channel::Whatsapp.first if Channel::Whatsapp.count == 1
+    channel
   end
 
   def get_channel_from_wb_payload(wb_params)
-    metadata = wb_params[:entry].first[:changes].first.dig(:value, :metadata) || {}
+    metadata = wb_params.dig(:entry, 0, :changes, 0, :value, :metadata) ||
+               wb_params.dig('entry', 0, 'changes', 0, 'value', 'metadata') || {}
+    display_number = metadata[:display_phone_number] || metadata['display_phone_number']
+    phone_id = metadata[:phone_number_id] || metadata['phone_number_id']
+
+    return if display_number.blank? && phone_id.blank?
+
     Whatsapp::WebhookChannelFinderService.new(
-      display_phone_number: metadata[:display_phone_number],
-      phone_number_id: metadata[:phone_number_id]
+      display_phone_number: display_number,
+      phone_number_id: phone_id
     ).perform
   end
 end

@@ -10,14 +10,31 @@ class Webhooks::WhatsappController < ActionController::API
       return
     end
 
-    return head :ok if tracking_events_only?
+    return render json: { status: 'tracking_events_only' } if tracking_events_only?
 
+    result = { status: 'ok' }
     begin
-      Webhooks::WhatsappEventsJob.perform_now(params.to_unsafe_hash.with_indifferent_access)
+      payload_hash = params.to_unsafe_hash.with_indifferent_access
+      job = Webhooks::WhatsappEventsJob.new
+      channel = job.find_channel_from_whatsapp_business_payload(payload_hash)
+      if channel.present?
+        sender_id = job.contact_sender_id(payload_hash)
+        job.process_events(channel, payload_hash, sender_id)
+        result[:processed] = true
+        result[:channel_id] = channel.id
+        result[:messages_count] = Message.count
+        result[:conversations_count] = Conversation.count
+      else
+        Rails.logger.warn("Could not find WhatsApp channel for payload: #{params[:phone_number]}")
+        result[:processed] = false
+        result[:reason] = 'channel_not_found'
+      end
     rescue StandardError => e
-      Rails.logger.error("Error processing WhatsApp webhook: #{e.message}")
+      Rails.logger.error("Error processing WhatsApp webhook: #{e.message}\n#{e.backtrace&.first(10)&.join("\n")}")
+      result[:error] = e.message
+      result[:backtrace] = e.backtrace&.first(10)
     end
-    head :ok
+    render json: result, status: :ok
   end
 
   private
@@ -29,8 +46,16 @@ class Webhooks::WhatsappController < ActionController::API
     changes.present? && changes.all? { |change| change[:field] == 'tracking_events' }
   end
 
+  def find_channel_by_phone
+    raw_number = params[:phone_number].to_s.strip
+    return if raw_number.blank?
+
+    digits = raw_number.gsub(/[^0-9]/, '')
+    Channel::Whatsapp.find_by(phone_number: "+#{digits}") || Channel::Whatsapp.find_by(phone_number: digits)
+  end
+
   def valid_token?(token)
-    channel = Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    channel = whatsapp_channel
     whatsapp_webhook_verify_token = channel.provider_config['webhook_verify_token'] if channel.present?
     token == whatsapp_webhook_verify_token if whatsapp_webhook_verify_token.present?
   end
@@ -43,7 +68,7 @@ class Webhooks::WhatsappController < ActionController::API
   end
 
   def whatsapp_channel
-    @whatsapp_channel ||= whatsapp_business_payload_channel || Channel::Whatsapp.find_by(phone_number: params[:phone_number])
+    @whatsapp_channel ||= whatsapp_business_payload_channel || find_channel_by_phone || (Channel::Whatsapp.first if Channel::Whatsapp.count == 1)
   end
 
   def meta_signature_verification_required?
@@ -57,12 +82,16 @@ class Webhooks::WhatsappController < ActionController::API
   def whatsapp_business_payload_channel
     return unless params[:object] == 'whatsapp_business_account'
 
-    metadata = params.dig(:entry, 0, :changes, 0, :value, :metadata)
+    metadata = params.dig(:entry, 0, :changes, 0, :value, :metadata) ||
+               params.dig('entry', 0, 'changes', 0, 'value', 'metadata')
     return if metadata.blank?
 
+    display_number = metadata[:display_phone_number] || metadata['display_phone_number']
+    phone_id = metadata[:phone_number_id] || metadata['phone_number_id']
+
     Whatsapp::WebhookChannelFinderService.new(
-      display_phone_number: metadata[:display_phone_number],
-      phone_number_id: metadata[:phone_number_id]
+      display_phone_number: display_number,
+      phone_number_id: phone_id
     ).perform
   end
 
