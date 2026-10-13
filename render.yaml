@@ -1,10 +1,11 @@
 services:
-  # 1. Morrow Console Web Server (Rails UI & API)
+  # 1. Morrow Web Server & Background Worker (100% Free Plan, No Credit Card)
   - type: web
-    name: morrow-console-web
+    name: morrow-web
     runtime: docker
-    dockerfilePath: docker/Dockerfile
-    plan: starter
+    dockerfilePath: Dockerfile
+    dockerCommand: sh -c "bundle exec rake db:chatwoot_prepare && (bundle exec sidekiq -C config/sidekiq.yml &) && bundle exec rails server -b 0.0.0.0 -p $PORT"
+    plan: free
     region: frankfurt
     healthCheckPath: /api
     envVars:
@@ -23,61 +24,18 @@ services:
       - key: SECRET_KEY_BASE
         generateValue: true
       - key: FRONTEND_URL
-        value: https://morrow-console-web.onrender.com
+        value: https://morrow-web.onrender.com
       - key: DATABASE_URL
         fromDatabase:
-          name: morrow-console-db
+          name: morrow-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: keyvalue
-          name: morrow-console-redis
-          property: connectionString
-
-  # 2. Background Queue Worker (Sidekiq)
-  - type: worker
-    name: morrow-console-worker
-    runtime: docker
-    dockerfilePath: docker/Dockerfile
-    dockerCommand: bundle exec sidekiq -C config/sidekiq.yml
-    plan: starter
-    region: frankfurt
-    envVars:
-      - key: RAILS_ENV
-        value: production
-      - key: NODE_ENV
-        value: production
-      - key: INSTALLATION_ENV
-        value: docker
-      - key: SECRET_KEY_BASE
-        fromService:
-          type: web
-          name: morrow-console-web
-          envVarKey: SECRET_KEY_BASE
-      - key: FRONTEND_URL
-        value: https://morrow-console-web.onrender.com
-      - key: DATABASE_URL
-        fromDatabase:
-          name: morrow-console-db
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: keyvalue
-          name: morrow-console-redis
-          property: connectionString
-
-  # 3. Redis Instance
-  - type: keyvalue
-    name: morrow-console-redis
-    plan: starter
-    region: frankfurt
-    maxmemoryPolicy: noeviction
-    ipAllowList: []
+        sync: false
 
 databases:
-  # 4. PostgreSQL Database
-  - name: morrow-console-db
+  # 2. PostgreSQL Database (100% Free Plan, No Credit Card)
+  - name: morrow-db
     databaseName: chatwoot_production
     user: chatwoot
-    plan: starter
+    plan: free
     region: frankfurt
