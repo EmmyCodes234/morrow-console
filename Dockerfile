@@ -13,10 +13,11 @@ COPY config/installation_config.yml /app/config/installation_config.yml
 COPY config/database.yml /app/config/database.yml
 COPY app/views/layouts/vueapp.html.erb /app/app/views/layouts/vueapp.html.erb
 
-# 3. Inject Morrow WhatsApp Webhook Handlers
+# 3. Inject Morrow WhatsApp Webhook Handlers & Synchronous Outbound Reply
 COPY app/controllers/webhooks/whatsapp_controller.rb /app/app/controllers/webhooks/whatsapp_controller.rb
 COPY app/jobs/webhooks/whatsapp_events_job.rb /app/app/jobs/webhooks/whatsapp_events_job.rb
 COPY app/services/whatsapp/incoming_message_whatsapp_cloud_service.rb /app/app/services/whatsapp/incoming_message_whatsapp_cloud_service.rb
+COPY app/models/message.rb /app/app/models/message.rb
 
 # 3. Inject dedicated Render entrypoint
 COPY render-entrypoint.sh /app/render-entrypoint.sh
