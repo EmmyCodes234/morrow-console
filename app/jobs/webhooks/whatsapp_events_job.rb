@@ -15,16 +15,7 @@ class Webhooks::WhatsappEventsJob < MutexApplicationJob
     end
 
     sender_id = contact_sender_id(params)
-    return process_events(channel, params) if sender_id.blank?
-
-    # Album uploads arrive as separate concurrent webhooks. Serialize per (inbox, contact)
-    # so the first webhook creates the conversation and the rest append to it.
-    # 30s TTL covers the attachment download + transaction — the default 1s expires
-    # mid-processing and lets a concurrent webhook re-acquire before the first commit.
-    key = format(::Redis::Alfred::WHATSAPP_MESSAGE_MUTEX, inbox_id: channel.inbox.id, sender_id: sender_id)
-    with_lock(key, 30.seconds) do
-      process_events(channel, params, sender_id)
-    end
+    process_events(channel, params, sender_id)
   end
 
   def process_events(channel, params, locked_sender_id = nil)

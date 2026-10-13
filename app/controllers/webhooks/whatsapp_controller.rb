@@ -16,19 +16,11 @@ class Webhooks::WhatsappController < ActionController::API
     begin
       payload_hash = params.to_unsafe_hash.with_indifferent_access
       job = Webhooks::WhatsappEventsJob.new
-      channel = job.find_channel_from_whatsapp_business_payload(payload_hash)
-      if channel.present?
-        sender_id = job.contact_sender_id(payload_hash)
-        job.process_events(channel, payload_hash, sender_id)
-        result[:processed] = true
-        result[:channel_id] = channel.id
-        result[:messages_count] = Message.count
-        result[:conversations_count] = Conversation.count
-      else
-        Rails.logger.warn("Could not find WhatsApp channel for payload: #{params[:phone_number]}")
-        result[:processed] = false
-        result[:reason] = 'channel_not_found'
-      end
+      job.perform(payload_hash)
+      result[:processed] = true
+      result[:messages_count] = Message.count
+      result[:conversations_count] = Conversation.count
+      result[:contacts_count] = Contact.count
     rescue StandardError => e
       Rails.logger.error("Error processing WhatsApp webhook: #{e.message}\n#{e.backtrace&.first(10)&.join("\n")}")
       result[:error] = e.message
