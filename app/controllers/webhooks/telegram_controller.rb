@@ -1,6 +1,10 @@
 class Webhooks::TelegramController < ActionController::API
   def process_payload
-    Webhooks::TelegramEventsJob.perform_later(params.to_unsafe_hash)
+    begin
+      Webhooks::TelegramEventsJob.perform_now(params.to_unsafe_hash)
+    rescue StandardError => e
+      Rails.logger.error("[TELEGRAM_WEBHOOK_ERROR] #{e.message}")
+    end
 
     callback_query = params[:callback_query]
     callback_query_id = callback_query[:id] if callback_query.respond_to?(:key?)
