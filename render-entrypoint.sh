@@ -7,8 +7,5 @@ rm -f /app/tmp/pids/server.pid
 echo "==> Running database migrations..."
 bundle exec rake db:migrate
 
-echo "==> Starting Sidekiq background worker (concurrency ${SIDEKIQ_CONCURRENCY:-2})..."
-bundle exec sidekiq -C config/sidekiq.yml -e production &
-
 echo "==> Starting Rails server on port ${PORT:-3000}..."
 exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}

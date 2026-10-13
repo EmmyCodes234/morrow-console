@@ -12,7 +12,11 @@ class Webhooks::WhatsappController < ActionController::API
 
     return head :ok if tracking_events_only?
 
-    Webhooks::WhatsappEventsJob.perform_later(params.to_unsafe_hash)
+    begin
+      Webhooks::WhatsappEventsJob.perform_now(params.to_unsafe_hash)
+    rescue StandardError => e
+      Rails.logger.error("Error processing WhatsApp webhook: #{e.message}")
+    end
     head :ok
   end
 
