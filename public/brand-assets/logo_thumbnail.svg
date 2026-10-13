@@ -1,25 +1,15 @@
-<svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <g clip-path="url(#woot-logo-clip-2342424e23u32098)">
-    <path
-      d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z"
-      fill="#2781F6"
-    />
-    <path
-      d="M11.4172 11.4172H7.70831C5.66383 11.4172 4 9.75328 4 7.70828C4 5.66394 5.66383 4 7.70835 4C9.75339 4 11.4172 5.66394 11.4172 7.70828V11.4172Z"
-      fill="white"
-      stroke="white"
-      stroke-width="0.1875"
-    />
-  </g>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <clipPath id="woot-logo-clip-2342424e23u32098">
-      <rect width="16" height="16" fill="white" />
-    </clipPath>
+    <linearGradient id="morrow-thumb-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="subtle-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#047857" flood-opacity="0.3"/>
+    </filter>
   </defs>
+  <rect x="3" y="3" width="58" height="58" rx="14" fill="url(#morrow-thumb-grad)"/>
+  <rect x="3" y="3" width="58" height="58" rx="14" stroke="white" stroke-opacity="0.15" stroke-width="1"/>
+  <path d="M15 47V19C15 17.8954 15.8954 17 17 17H22.5L32 31L41.5 17H47C48.1046 17 49 17.8954 49 19V47H41.5V26.5L32 39.5L22.5 26.5V47H15Z" fill="white" stroke="white" stroke-width="1.2" stroke-linejoin="round"/>
 </svg>

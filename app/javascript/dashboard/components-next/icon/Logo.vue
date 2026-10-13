@@ -22,22 +22,10 @@ const globalConfig = useMapGetter('globalConfig/get');
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#woot-logo-clip-2342424e23u32098)">
-      <path
-        d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z"
-        fill="#2781F6"
-      />
-      <path
-        d="M11.4172 11.4172H7.70831C5.66383 11.4172 4 9.75328 4 7.70828C4 5.66394 5.66383 4 7.70835 4C9.75339 4 11.4172 5.66394 11.4172 7.70828V11.4172Z"
-        fill="white"
-        stroke="white"
-        stroke-width="0.1875"
-      />
-    </g>
-    <defs>
-      <clipPath id="woot-logo-clip-2342424e23u32098">
-        <rect width="16" height="16" fill="white" />
-      </clipPath>
-    </defs>
+    <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="#059669" />
+    <path
+      d="M3.75 11.75V4.75C3.75 4.5 3.95 4.25 4.25 4.25H5.6L8 7.5L10.4 4.25H11.75C12.05 4.25 12.25 4.5 12.25 4.75V11.75H10.4V6.75L8 9.9L5.6 6.75V11.75H3.75Z"
+      fill="white"
+    />
   </svg>
 </template>

@@ -15,7 +15,7 @@ services:
       - key: INSTALLATION_ENV
         value: docker
       - key: INSTALLATION_NAME
-        value: Morrow Console
+        value: Morrow
       - key: BRAND_NAME
         value: Morrow
       - key: BRAND_URL
