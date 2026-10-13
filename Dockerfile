@@ -8,11 +8,16 @@ COPY public/brand-assets/logo_dark.svg /app/public/brand-assets/logo_dark.svg
 COPY public/brand-assets/logo_thumbnail.svg /app/public/brand-assets/logo_thumbnail.svg
 COPY public/manifest.json /app/public/manifest.json
 
-# 2. Inject Morrow Configurations & Views
+# 2. Inject Morrow Configurations, Views & Database config
 COPY config/installation_config.yml /app/config/installation_config.yml
+COPY config/database.yml /app/config/database.yml
 COPY app/views/layouts/vueapp.html.erb /app/app/views/layouts/vueapp.html.erb
 
-# 3. Fast-patch precompiled bundles (rebrand color to emerald & update auth copy)
+# 3. Inject dedicated Render entrypoint
+COPY render-entrypoint.sh /app/render-entrypoint.sh
+RUN chmod +x /app/render-entrypoint.sh
+
+# 4. Fast-patch precompiled bundles (rebrand color to emerald & update auth copy)
 RUN if [ -d /app/public/packs ]; then \
       find /app/public/packs -type f \( -name "*.js" -o -name "*.css" \) -exec sed -i 's/#2781F6/#059669/gI' {} + && \
       find /app/public/packs -type f -name "*.js" -exec sed -i 's/Login to Chatwoot/Sign in to Morrow/g' {} + && \
@@ -22,3 +27,5 @@ RUN if [ -d /app/public/packs ]; then \
 
 WORKDIR /app
 EXPOSE 3000
+
+ENTRYPOINT ["/app/render-entrypoint.sh"]
