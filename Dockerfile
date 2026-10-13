@@ -8,10 +8,11 @@ COPY public/brand-assets/logo_dark.svg /app/public/brand-assets/logo_dark.svg
 COPY public/brand-assets/logo_thumbnail.svg /app/public/brand-assets/logo_thumbnail.svg
 COPY public/manifest.json /app/public/manifest.json
 
-# 2. Inject Morrow Configurations, Views & Database config
+# 2. Inject Morrow Configurations, Views, Database config & App Code
 COPY config/installation_config.yml /app/config/installation_config.yml
 COPY config/database.yml /app/config/database.yml
-COPY app/views/layouts/vueapp.html.erb /app/app/views/layouts/vueapp.html.erb
+COPY app/ /app/app/
+COPY lib/ /app/lib/
 
 # 3. Inject dedicated Render entrypoint
 COPY render-entrypoint.sh /app/render-entrypoint.sh
