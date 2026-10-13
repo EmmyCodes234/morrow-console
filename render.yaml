@@ -1,0 +1,111 @@
+version: "1"
+
+services:
+  # 1. Morrow Console Web Server (Rails UI & API)
+  - type: web
+    name: morrow-console-web
+    env: docker
+    dockerfilePath: docker/Dockerfile
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /api
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: NODE_ENV
+        value: production
+      - key: INSTALLATION_ENV
+        value: docker
+      - key: INSTALLATION_NAME
+        value: Morrow Console
+      - key: BRAND_NAME
+        value: Morrow
+      - key: BRAND_URL
+        value: https://morrow.money
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: morrow-console-web
+          property: url
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: morrow-console-db
+          property: host
+      - key: POSTGRES_USERNAME
+        fromDatabase:
+          name: morrow-console-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: morrow-console-db
+          property: password
+      - key: POSTGRES_DATABASE
+        fromDatabase:
+          name: morrow-console-db
+          property: database
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: morrow-console-redis
+          property: connectionString
+
+  # 2. Background Queue Worker (Sidekiq)
+  - type: worker
+    name: morrow-console-worker
+    env: docker
+    dockerfilePath: docker/Dockerfile
+    startCommand: bundle exec sidekiq -C config/sidekiq.yml
+    plan: starter
+    region: frankfurt
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: NODE_ENV
+        value: production
+      - key: INSTALLATION_ENV
+        value: docker
+      - key: SECRET_KEY_BASE
+        sync: morrow-console-web.SECRET_KEY_BASE
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: morrow-console-web
+          property: url
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: morrow-console-db
+          property: host
+      - key: POSTGRES_USERNAME
+        fromDatabase:
+          name: morrow-console-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: morrow-console-db
+          property: password
+      - key: POSTGRES_DATABASE
+        fromDatabase:
+          name: morrow-console-db
+          property: database
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: morrow-console-redis
+          property: connectionString
+
+  # 3. Redis Instance
+  - type: redis
+    name: morrow-console-redis
+    plan: starter
+    region: frankfurt
+    maxmemoryPolicy: noeviction
+
+databases:
+  # 4. PostgreSQL Database
+  - name: morrow-console-db
+    databaseName: chatwoot_production
+    user: chatwoot
+    plan: starter
+    region: frankfurt
