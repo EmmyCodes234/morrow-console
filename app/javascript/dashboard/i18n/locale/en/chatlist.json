@@ -1,18 +1,18 @@
 {
   "CHAT_LIST": {
-    "LOADING": "Fetching conversations",
-    "LOAD_MORE_CONVERSATIONS": "Load more conversations",
-    "EOF": "All conversations loaded 🎉",
+    "LOADING": "Fetching cases",
+    "LOAD_MORE_CONVERSATIONS": "Load more cases",
+    "EOF": "All cases loaded",
     "LIST": {
-      "404": "There are no active conversations in this group."
+      "404": "There are no active cases in this group."
     },
     "FAILED_TO_SEND": "Failed to send",
-    "FETCH_ERROR": "Couldn't load conversations. Please try again.",
-    "TAB_HEADING": "Conversations",
+    "FETCH_ERROR": "Couldn't load cases. Please try again.",
+    "TAB_HEADING": "Cases",
     "MENTION_HEADING": "Mentions",
-    "UNATTENDED_HEADING": "Unattended",
+    "UNATTENDED_HEADING": "Needs Attention",
     "SEARCH": {
-      "INPUT": "Search for People, Chats, Saved Replies .."
+      "INPUT": "Search customers, cases, or notes..."
     },
     "FILTER_ALL": "All",
     "ASSIGNEE_TYPE_TABS": {
@@ -25,20 +25,20 @@
         "TEXT": "Open"
       },
       "resolved": {
-        "TEXT": "Resolved"
+        "TEXT": "Closed"
       },
       "pending": {
-        "TEXT": "Pending"
+        "TEXT": "Waiting"
       },
       "snoozed": {
-        "TEXT": "Snoozed"
+        "TEXT": "Follow Up"
       },
       "all": {
         "TEXT": "All"
       }
     },
     "VIEW_FILTER": "View",
-    "SORT_TOOLTIP_LABEL": "Sort conversations",
+    "SORT_TOOLTIP_LABEL": "Sort cases",
     "CHAT_SORT": {
       "STATUS": "Status",
       "ORDER_BY": "Order by"

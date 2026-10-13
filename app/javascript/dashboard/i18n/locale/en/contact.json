@@ -57,21 +57,21 @@
     "SEND_TRANSCRIPT": "Send Transcript",
     "EDIT_LABEL": "Edit",
     "SIDEBAR_SECTIONS": {
-      "CUSTOM_ATTRIBUTES": "Custom Attributes",
-      "CONTACT_LABELS": "Contact Labels",
-      "PREVIOUS_CONVERSATIONS": "Previous Conversations",
-      "NO_RECORDS_FOUND": "No attributes found"
+      "CUSTOM_ATTRIBUTES": "Details",
+      "CONTACT_LABELS": "Labels",
+      "PREVIOUS_CONVERSATIONS": "Past Cases",
+      "NO_RECORDS_FOUND": "No details found"
     }
   },
   "EDIT_CONTACT": {
-    "BUTTON_LABEL": "Edit Contact",
-    "TITLE": "Edit contact",
-    "DESC": "Edit contact details"
+    "BUTTON_LABEL": "Edit Customer",
+    "TITLE": "Edit customer",
+    "DESC": "Edit customer details"
   },
   "DELETE_CONTACT": {
-    "BUTTON_LABEL": "Delete Contact",
-    "TITLE": "Delete contact",
-    "DESC": "Delete contact details",
+    "BUTTON_LABEL": "Delete Customer",
+    "TITLE": "Delete customer",
+    "DESC": "Delete customer details",
     "CONFIRM": {
       "TITLE": "Confirm Deletion",
       "MESSAGE": "Are you sure to delete ",

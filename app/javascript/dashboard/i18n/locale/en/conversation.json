@@ -144,18 +144,18 @@
       "TRANSCRIPT_SHOW_LESS": "Show less"
     },
     "HEADER": {
-      "RESOLVE_ACTION": "Resolve",
+      "RESOLVE_ACTION": "Close Case",
       "REOPEN_ACTION": "Reopen",
       "OPEN_ACTION": "Open",
       "MORE_ACTIONS": "More actions",
       "OPEN": "More",
       "CLOSE": "Close",
       "DETAILS": "details",
-      "COPY_ID_SUCCESS": "Conversation ID copied to clipboard",
-      "SNOOZED_UNTIL": "Snoozed until",
-      "SNOOZED_UNTIL_TOMORROW": "Snoozed until tomorrow",
-      "SNOOZED_UNTIL_NEXT_WEEK": "Snoozed until next week",
-      "SNOOZED_UNTIL_NEXT_REPLY": "Snoozed until next reply",
+      "COPY_ID_SUCCESS": "Case ID copied to clipboard",
+      "SNOOZED_UNTIL": "Follow up in",
+      "SNOOZED_UNTIL_TOMORROW": "Follow up tomorrow",
+      "SNOOZED_UNTIL_NEXT_WEEK": "Follow up next week",
+      "SNOOZED_UNTIL_NEXT_REPLY": "Follow up on next reply",
       "WHATSAPP_CALL": "Start WhatsApp call",
       "WHATSAPP_CALL_FAILED": "Could not start the WhatsApp call.",
       "VOICE_CALL": "Start call",
@@ -171,10 +171,10 @@
       }
     },
     "RESOLVE_DROPDOWN": {
-      "MARK_PENDING": "Mark as pending",
-      "SNOOZE_UNTIL": "Snooze",
+      "MARK_PENDING": "Mark as waiting",
+      "SNOOZE_UNTIL": "Follow Up",
       "SNOOZE": {
-        "TITLE": "Snooze until",
+        "TITLE": "Follow up in",
         "NEXT_REPLY": "Next reply",
         "TOMORROW": "Tomorrow",
         "NEXT_WEEK": "Next week"
@@ -294,9 +294,9 @@
       "MESSAGE_SIGN_TOOLTIP": "Message signature",
       "ENABLE_SIGN_TOOLTIP": "Enable signature",
       "DISABLE_SIGN_TOOLTIP": "Disable signature",
-      "MSG_INPUT": "Shift + enter for new line. Start with '/' to select a Canned Response.",
-      "PRIVATE_MSG_INPUT": "Shift + enter for new line. This will be visible only to Agents",
-      "MESSAGING_RESTRICTED": "You cannot reply to this conversation",
+      "MSG_INPUT": "Shift + enter for new line. Type '/' for saved replies.",
+      "PRIVATE_MSG_INPUT": "Shift + enter for new line. Visible only to your team",
+      "MESSAGING_RESTRICTED": "You cannot reply to this case",
       "MESSAGING_RESTRICTED_WHATSAPP": "You can only reply using a template message due to 24-hour message window restriction",
       "MESSAGING_RESTRICTED_API": "You can only reply using a template message due to message window restriction",
       "MESSAGE_SIGNATURE_NOT_CONFIGURED": "Message signature is not configured, please configure it in profile settings.",
@@ -306,9 +306,9 @@
     },
     "REPLYBOX": {
       "REPLY": "Reply",
-      "PRIVATE_NOTE": "Private Note",
+      "PRIVATE_NOTE": "Internal Note",
       "SEND": "Send",
-      "CREATE": "Add Note",
+      "CREATE": "Add Internal Note",
       "INSERT_READ_MORE": "Read more",
       "DISMISS_REPLY": "Dismiss reply",
       "REPLYING_TO": "Replying to:",
@@ -354,23 +354,23 @@
         "REMOVE": "Remove quoted text"
       }
     },
-    "VISIBLE_TO_AGENTS": "Private Note: Only visible to you and your team",
-    "CHANGE_STATUS": "Conversation status changed",
-    "CHANGE_STATUS_FAILED": "Conversation status change failed",
-    "CHANGE_AGENT": "Conversation Assignee changed",
+    "VISIBLE_TO_AGENTS": "Internal Note: Only visible to you and your team",
+    "CHANGE_STATUS": "Case status changed",
+    "CHANGE_STATUS_FAILED": "Case status change failed",
+    "CHANGE_AGENT": "Case assignee changed",
     "CHANGE_AGENT_FAILED": "Assignee change failed",
     "ASSIGN_LABEL_SUCCESFUL": "Label assigned successfully",
     "ASSIGN_LABEL_FAILED": "Label assignment failed",
-    "CHANGE_TEAM": "Conversation team changed",
-    "SUCCESS_DELETE_CONVERSATION": "Conversation deleted successfully",
-    "FAIL_DELETE_CONVERSATION": "Couldn't delete conversation! Try again",
+    "CHANGE_TEAM": "Case team changed",
+    "SUCCESS_DELETE_CONVERSATION": "Case deleted successfully",
+    "FAIL_DELETE_CONVERSATION": "Couldn't delete case! Try again",
     "FILE_SIZE_LIMIT": "File exceeds the {MAXIMUM_SUPPORTED_FILE_UPLOAD_SIZE} MB attachment limit",
-    "FILE_TYPE_NOT_SUPPORTED": "This {fileName} file type is not supported in this conversation",
+    "FILE_TYPE_NOT_SUPPORTED": "This {fileName} file type is not supported in this case",
     "MESSAGE_ERROR": "Unable to send this message, please try again later",
     "SENT_BY": "Sent by:",
     "BOT": "Bot",
     "NATIVE_APP": "Native app",
-    "NATIVE_APP_ADVISORY": "This message was sent from the native app. Reply from Chatwoot to maintain the message window.",
+    "NATIVE_APP_ADVISORY": "This message was sent from the native app. Reply from Morrow to maintain the message window.",
     "SEND_FAILED": "Couldn't send message! Try again",
     "TRY_AGAIN": "retry",
     "ASSIGNMENT": {
@@ -383,7 +383,7 @@
       "REPLY_TO": "Reply to this message",
       "FORWARD_EMAIL": "Forward email",
       "DELETE": "Delete",
-      "CREATE_A_CANNED_RESPONSE": "Add to canned responses",
+      "CREATE_A_CANNED_RESPONSE": "Save as reply",
       "TRANSLATE": "Translate",
       "COPY_PERMALINK": "Copy link to the message",
       "LINK_COPIED": "Message URL copied to the clipboard",
@@ -474,9 +474,9 @@
       "NEW_LINK": "Click here to create tags"
     },
     "CANNED_RESPONSES": {
-      "TITLE": "Create canned responses",
-      "DESCRIPTION": "Pre-written quick reply templates help you quickly respond to a conversation. Agents can type the '/' character followed by the shortcode to insert a response.",
-      "NEW_LINK": "Click here to create a canned response"
+      "TITLE": "Create saved replies",
+      "DESCRIPTION": "Pre-written quick replies help you quickly respond to a case. Type the '/' character followed by the shortcode to insert a reply.",
+      "NEW_LINK": "Click here to create a saved reply"
     }
   },
   "CONVERSATION_SIDEBAR": {
