@@ -166,15 +166,15 @@
     }
   },
   "REPORT": {
-    "HEADER": "Conversations",
+    "HEADER": "Cases",
     "LOADING_CHART": "Loading chart data...",
     "NO_ENOUGH_DATA": "We've not received enough data points to generate report, Please try again later.",
-    "DOWNLOAD_CONVERSATION_REPORTS": "Download conversation reports",
+    "DOWNLOAD_CONVERSATION_REPORTS": "Download case reports",
     "DATA_FETCHING_FAILED": "Failed to fetch data, please try again later.",
     "SUMMARY_FETCHING_FAILED": "Failed to fetch summary, please try again later.",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Conversations",
+        "NAME": "Cases",
         "DESC": "( Total )"
       },
       "INCOMING_MESSAGES": {

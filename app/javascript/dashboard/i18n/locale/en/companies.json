@@ -68,7 +68,7 @@
         "DIALOG_TITLE": "Add people to {name}"
       },
       "TABS": {
-        "CONVERSATIONS": "Conversations",
+        "CONVERSATIONS": "Cases",
         "NOTES": "Notes",
         "PEOPLE": "People"
       },
@@ -76,12 +76,12 @@
         "TODAY": "Today",
         "YESTERDAY": "Yesterday",
         "SYSTEM_AUTHOR": "System",
-        "EMPTY_CONVERSATIONS": "No conversations yet. They'll show up here when this company's people get in touch.",
+        "EMPTY_CONVERSATIONS": "No cases yet. They'll show up here when this company's people get in touch.",
         "EMPTY_NOTES": "No notes yet. Notes added to this company's people show up here.",
         "LOAD_MORE": "Load more",
         "SEARCH_NOTES": "Search notes",
         "NO_MATCHING_NOTES": "No notes match your search.",
-        "NO_MATCHING_CONVERSATIONS": "No conversations match these filters."
+        "NO_MATCHING_CONVERSATIONS": "No cases match these filters."
       },
       "EDIT": {
         "TITLE": "Edit company",

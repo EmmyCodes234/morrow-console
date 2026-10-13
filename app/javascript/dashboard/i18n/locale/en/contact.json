@@ -28,9 +28,9 @@
       "TITLE": "Choose a voice inbox"
     },
     "CONVERSATIONS": {
-      "NO_RECORDS_FOUND": "There are no previous conversations associated to this contact.",
-      "TITLE": "Previous Conversations",
-      "VIEW_ALL": "View all conversations"
+      "NO_RECORDS_FOUND": "There are no past cases for this customer.",
+      "TITLE": "Past Cases",
+      "VIEW_ALL": "View all cases"
     },
     "LABELS": {
       "CONTACT": {

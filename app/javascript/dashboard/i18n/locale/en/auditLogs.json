@@ -17,7 +17,7 @@
         "ACCESS": "Access",
         "AGENTS_TEAMS": "Agents & teams",
         "CONFIGURATION": "Configuration",
-        "CONVERSATIONS": "Conversations"
+        "CONVERSATIONS": "Cases"
       },
       "EVENT_TYPES": {
         "SIGN_IN_OUT": "Sign in / sign out",
