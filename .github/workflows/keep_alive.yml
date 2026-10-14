@@ -1,0 +1,25 @@
+name: Morrow Keep Alive Heartbeat
+
+on:
+  schedule:
+    # Run every 10 minutes to stay within Render's 15-minute inactivity window
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping:
+    name: Keep Alive Ping
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Morrow Console & Neon PostgreSQL
+        run: |
+          echo "Sending keep-alive warmup ping to Morrow Console..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}s" "https://morrow-web-c0mt.onrender.com/health?full=true")
+          echo "$RESPONSE"
+          if echo "$RESPONSE" | grep -q "HTTP_STATUS:200"; then
+            echo "Morrow Console and database compute are hot and running."
+          else
+            echo "Warning: Response status was not 200, retrying once after 5s..."
+            sleep 5
+            curl -f -s "https://morrow-web-c0mt.onrender.com/health?full=true"
+          fi

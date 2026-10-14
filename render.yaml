@@ -7,7 +7,7 @@ services:
     dockerCommand: sh -c "bundle exec rake db:chatwoot_prepare && (bundle exec sidekiq -C config/sidekiq.yml &) && bundle exec rails server -b 0.0.0.0 -p $PORT"
     plan: free
     region: frankfurt
-    healthCheckPath: /api
+    healthCheckPath: /health
     envVars:
       - key: RAILS_ENV
         value: production
@@ -24,7 +24,13 @@ services:
       - key: SECRET_KEY_BASE
         generateValue: true
       - key: FRONTEND_URL
-        value: https://morrow-web.onrender.com
+        value: https://morrow-web-c0mt.onrender.com
+      - key: DISABLE_TELEMETRY
+        value: "true"
+      - key: RAILS_MAX_THREADS
+        value: "5"
+      - key: WEB_CONCURRENCY
+        value: "0"
       - key: DATABASE_URL
         fromDatabase:
           name: morrow-db

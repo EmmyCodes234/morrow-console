@@ -39,6 +39,9 @@ module Chatwoot
     config.load_defaults 7.0
     config.rails_i18n.enabled_modules = [:pluralization]
 
+    # Enable Gzip compression for HTML, JSON, and asset responses (cuts payload by ~80-85%)
+    config.middleware.use Rack::Deflater
+
     config.eager_load_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('enterprise/lib')
     config.eager_load_paths << Rails.root.join('enterprise/listeners')
