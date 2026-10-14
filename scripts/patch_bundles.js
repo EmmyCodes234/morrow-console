@@ -55,6 +55,14 @@ const REPLACEMENTS = [
   ['Canned Responses', 'Saved Replies'],
   ['canned response', 'saved reply'],
   ['canned responses', 'saved replies'],
+  ['"This conversation is not assigned to you. Would you like to assign this conversation to yourself?"', '"This case is not assigned to you. Would you like to assign this case to yourself?"'],
+  ['This conversation is not assigned to you', 'This case is not assigned to you'],
+  ['assign this conversation to yourself', 'assign this case to yourself'],
+  ['This conversation is currently handled by', 'This case is currently handled by'],
+  ['Conversation has been handed over to you', 'Case has been handed over to you'],
+  ['Mark conversation open', 'Mark case open'],
+  ['Failed to take over the conversation', 'Failed to take over the case'],
+  ['Go to latest conversation', 'Go to latest case'],
 
   // Branding & Woot references
   ['Login to Chatwoot', 'Sign in to Morrow'],
