@@ -30,17 +30,9 @@ COPY lib/global_config_service.rb /app/lib/global_config_service.rb
 COPY render-entrypoint.sh /app/render-entrypoint.sh
 RUN chmod +x /app/render-entrypoint.sh
 
-# 5. Fast-patch precompiled bundles (rebrand color to emerald & update auth copy & terminology)
-RUN for dir in /app/public/vite /app/public/packs; do \
-      if [ -d "$dir" ]; then \
-        echo "Patching assets in $dir..."; \
-        find "$dir" -type f \( -name "*.js" -o -name "*.css" \) -exec sed -i 's/#2781F6/#059669/gI' {} + ; \
-        find "$dir" -type f -name "*.js" -exec sed -i 's/Login to Chatwoot/Sign in to Morrow/g' {} + ; \
-        find "$dir" -type f -name "*.js" -exec sed -i 's/Could not connect to Woot server/Could not connect to Morrow server/g' {} + ; \
-        find "$dir" -type f -name "*.js" -exec sed -i 's/Powered by Chatwoot/Powered by Morrow/g' {} + ; \
-        find "$dir" -type f -name "*.js" -exec sed -i 's/Chatwoot/Morrow/g' {} + ; \
-      fi; \
-    done
+# 5. Deep-patch precompiled bundles (rebrand color to emerald, simple terminology, strip emojis)
+COPY scripts/patch_bundles.js /app/scripts/patch_bundles.js
+RUN node /app/scripts/patch_bundles.js /app/public/vite /app/public/packs
 
 WORKDIR /app
 EXPOSE 3000
