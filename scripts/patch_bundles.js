@@ -45,6 +45,16 @@ const REPLACEMENTS = [
   ['"Loading Conversations"', '"Loading Cases"'],
   ['"Resolve conversation"', '"Close Case"'],
   ['"Resolve"', '"Close Case"'],
+  ['CAPTAIN:"Captain"', 'CAPTAIN:"Morrow AI"'],
+  ['CAPTAIN_AI:"Captain"', 'CAPTAIN_AI:"Morrow AI"'],
+  ['"Captain"', '"Morrow AI"'],
+  ['"Shift + enter for new line. Start with \'/\' to select a Canned Response."', '"Shift + enter for new line. Type \'/\' for saved replies."'],
+  ['select a Canned Response', 'select a Saved Reply'],
+  ['a Canned Response', 'a Saved Reply'],
+  ['Canned Response', 'Saved Reply'],
+  ['Canned Responses', 'Saved Replies'],
+  ['canned response', 'saved reply'],
+  ['canned responses', 'saved replies'],
 
   // Branding & Woot references
   ['Login to Chatwoot', 'Sign in to Morrow'],

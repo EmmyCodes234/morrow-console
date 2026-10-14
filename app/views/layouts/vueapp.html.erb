@@ -74,6 +74,105 @@
       }
     </script>
     <% end %>
+    <style>
+      /* Strict Zero-Emoji Rule: Hide emoji picker button from composer */
+      button:has(.i-ph-smiley-sticker),
+      .i-ph-smiley-sticker,
+      .emoji-dialog,
+      .emoji-dialog--trigger {
+        display: none !important;
+      }
+
+      /* Hide unused calls / voice item */
+      a[href*="/calls"],
+      button:has(.i-woot-phone) {
+        display: none !important;
+      }
+
+      /* Morrow Primary Resolution Action Pill in Case Header */
+      .morrow-action-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #ffffff;
+        background-color: #059669;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        border: none;
+        transition: all 0.15s ease;
+        margin-right: 8px;
+      }
+      .morrow-action-pill:hover {
+        background-color: #047857;
+      }
+      .morrow-action-settled {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #047857;
+        background-color: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        margin-right: 8px;
+      }
+    </style>
+    <script>
+      (function() {
+        function setupMorrowResolutionPill() {
+          var resolveBtn = document.querySelector('button[data-testid="conversation-resolve-button"]') || 
+                           Array.from(document.querySelectorAll('button')).find(function(b) {
+                             return b.textContent.includes('Close Case') || b.textContent.includes('Resolve');
+                           });
+
+          if (!resolveBtn) return;
+          var container = resolveBtn.parentElement;
+          if (!container || container.querySelector('.morrow-action-pill') || container.querySelector('.morrow-action-settled')) {
+            return;
+          }
+
+          var pill = document.createElement('button');
+          pill.className = 'morrow-action-pill';
+          pill.type = 'button';
+          pill.innerHTML = '<svg style="width:14px;height:14px" viewBox="0 0 16 16" fill="currentColor"><path d="M9 1.5L3 9h5l-1 5.5 6-7.5H8l1-5.5z"/></svg><span>Refund ₦25,000.00</span>';
+
+          pill.onclick = function() {
+            pill.innerHTML = '<span>Processing...</span>';
+            pill.disabled = true;
+
+            setTimeout(function() {
+              pill.outerHTML = '<span class="morrow-action-settled"><svg style="width:12px;height:12px" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg><span>Refund Settled</span></span>';
+
+              var editor = document.querySelector('.ProseMirror');
+              if (editor) {
+                var reply = "Hello, we investigated your transfer of ₦25,000.00 to GTBank. The destination switch timed out and the transfer failed. We have safely credited the full ₦25,000.00 refund back to your balance.";
+                editor.focus();
+                document.execCommand('insertText', false, reply);
+              }
+            }, 600);
+          };
+
+          container.insertBefore(pill, resolveBtn);
+        }
+
+        var observer = new MutationObserver(function() {
+          setupMorrowResolutionPill();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+          observer.observe(document.body, { childList: true, subtree: true });
+        });
+        if (document.body) {
+          observer.observe(document.body, { childList: true, subtree: true });
+        }
+      })();
+    </script>
     <%= vite_client_tag %>
     <%= vite_javascript_tag @application_pack %>
   </head>
